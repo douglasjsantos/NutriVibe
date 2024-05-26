@@ -1,11 +1,18 @@
 package br.com.fiap.nutrivibe.nutrivibe.service;
 
+import br.com.fiap.nutrivibe.nutrivibe.dto.ServicoAtualizaçãoDto;
+import br.com.fiap.nutrivibe.nutrivibe.dto.ServicoCadastroDto;
+import br.com.fiap.nutrivibe.nutrivibe.dto.ServicoExibitionDto;
+import br.com.fiap.nutrivibe.nutrivibe.model.Profissional;
 import br.com.fiap.nutrivibe.nutrivibe.model.Servico;
+import br.com.fiap.nutrivibe.nutrivibe.repository.ProfissionalRepository;
 import br.com.fiap.nutrivibe.nutrivibe.repository.ServicoRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -14,29 +21,56 @@ public class ServicoService {
     @Autowired
     private ServicoRepository servicoRepository;
 
-    public Servico gravar(Servico servico) {
-        return servicoRepository.save(servico);
+    @Autowired
+    private ProfissionalRepository profissionalRepository;
+
+    public ServicoExibitionDto gravar(ServicoCadastroDto servicoCadastroDto) {
+
+        Optional<Profissional> profissional = profissionalRepository.findById(servicoCadastroDto.getProfissional_id());
+
+        if (profissional.isPresent()) {
+            Servico servico = new Servico();
+            BeanUtils.copyProperties(servicoCadastroDto, servico);
+            servico.setProfissional(profissional.get());
+            return new ServicoExibitionDto(servicoRepository.save(servico));
+        } else {
+            throw new RuntimeException("Profissional não encontrado");
+        }
+
+
     }
 
-    public Servico buscarPorId(Long id) {
+    public ServicoExibitionDto buscarPorId(Long id) {
         Optional<Servico> servicoOptional = servicoRepository.findById(id);
 
         if (servicoOptional.isPresent()) {
-            return servicoOptional.get();
+            return new ServicoExibitionDto(servicoOptional.get());
         } else {
             throw new RuntimeException("Serviço não encontrado");
         }
     }
 
-    public List<Servico> listarTodosOsServicos() {
-        return servicoRepository.findAll();
+    public Page<ServicoExibitionDto> listarTodosOsServicos(Pageable paginacao) {
+        Page<ServicoExibitionDto> servicos = servicoRepository
+                .findAll(paginacao)
+                .map(ServicoExibitionDto::new);
+        return servicos;
     }
 
-    public Servico Atualizar(Servico servico) {
-        Optional<Servico> servicoptional = servicoRepository.findById(servico.getId());
+    public ServicoExibitionDto Atualizar(ServicoAtualizaçãoDto servicoAtualizaçãoDto) {
+        Optional<Servico> servicoptional = servicoRepository.findById(servicoAtualizaçãoDto.getId());
 
         if (servicoptional.isPresent()) {
-            return servicoRepository.save(servicoptional.get());
+            Optional<Profissional> profissional = profissionalRepository.findById(servicoAtualizaçãoDto.getProfissional_id());
+
+            if (profissional.isPresent()) {
+                Servico servico = new Servico();
+                BeanUtils.copyProperties(servicoAtualizaçãoDto, servico);
+                servico.setProfissional(profissional.get());
+                return new ServicoExibitionDto(servicoRepository.save(servico));
+            } else {
+                throw new RuntimeException("Profissional não encontrado");
+            }
         } else {
             throw new RuntimeException("Serviço não encontrado");
         }
