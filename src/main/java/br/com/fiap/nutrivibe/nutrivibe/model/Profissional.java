@@ -1,14 +1,35 @@
 package br.com.fiap.nutrivibe.nutrivibe.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.proxy.HibernateProxy;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
-@Entity(name = "profissional")
+@Entity(name = "tb_profissional")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Profissional {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "TB_PROFISSIONAL_SEQ"
+    )
+
+    @SequenceGenerator(
+            name = "TB_PROFISSIONAL_SEQ",
+            sequenceName = "TB_PROFISSIONAL_SEQ",
+            allocationSize = 1
+    )
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nome;
     private String especialidade;
@@ -19,43 +40,19 @@ public class Profissional {
     @Column(name = "preco_plano_mensal")
     private BigDecimal precoPlanoMensal;
 
-    public Long getId() {
-        return id;
+    @Override
+    public final boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null) return false;
+        Class<?> oEffectiveClass = object instanceof HibernateProxy ? ((HibernateProxy) object).getHibernateLazyInitializer().getPersistentClass() : object.getClass();
+        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+        if (thisEffectiveClass != oEffectiveClass) return false;
+        Profissional that = (Profissional) object;
+        return getId() != null && Objects.equals(getId(), that.getId());
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getEspecialidade() {
-        return especialidade;
-    }
-
-    public void setEspecialidade(String especialidade) {
-        this.especialidade = especialidade;
-    }
-
-    public BigDecimal getPrecoPlanoAnual() {
-        return precoPlanoAnual;
-    }
-
-    public void setPrecoPlanoAnual(BigDecimal precoPlanoAnual) {
-        this.precoPlanoAnual = precoPlanoAnual;
-    }
-
-    public BigDecimal getPrecoPlanoMensal() {
-        return precoPlanoMensal;
-    }
-
-    public void setPrecoPlanoMensal(BigDecimal precoPlanoMensal) {
-        this.precoPlanoMensal = precoPlanoMensal;
+    @Override
+    public final int hashCode() {
+        return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
     }
 }
