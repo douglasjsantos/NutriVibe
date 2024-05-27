@@ -8,7 +8,7 @@ public record FeedbackAtualizacaoDto(
         Long id,
         @NotBlank(message = "O comentário é obrigatório!")
         String comentario,
-        @NotBlank(message = "O ID do agendamento é obrigatório!")
+        @NotNull(message = "O ID do agendamento é obrigatório!")
         Long agendamento_id
 
 ) {

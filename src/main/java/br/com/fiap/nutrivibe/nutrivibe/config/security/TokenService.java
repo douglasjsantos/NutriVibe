@@ -1,0 +1,50 @@
+package br.com.fiap.nutrivibe.nutrivibe.config.security;
+
+import br.com.fiap.nutrivibe.nutrivibe.model.Usuario;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import com.auth0.jwt.algorithms.Algorithm;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+
+@Service
+public class TokenService {
+    @Value("${minha.chave.secreta}")
+    private String palavraSecreta;
+
+    public Instant gerarDataDeExpiracao(){
+        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
+    }
+
+    public String gerarToken(Usuario usuario){
+        try{
+            Object Algorithm;
+            Algorithm algorithm = Algorithm.HMAC256(palavraSecreta);
+            String token = JWT
+                    .create()
+                    .withIssuer("usuarios")
+                    .withSubject(usuario.getEmail())
+                    .withExpiresAt(gerarDataDeExpiracao())
+                    .sign(algorithm);
+            return token;
+        }catch (JWTCreationException erro){
+            throw  new RuntimeException("Não foi possível gerar o token!");
+        }
+    }
+
+
+    public String validarToken(String token){
+        try{
+            Algorithm algorithm = Algorithm.HMAC256(palavraSecreta);
+
+            return JWT.require(algorithm)
+                    .withIssuer("usuarios")
+                    .build()
+                    .verify(token)
+                    .getSubject();
+        }catch (JWTVerificationException erro){
+            return "";
+        }
+    }
+}

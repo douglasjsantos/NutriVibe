@@ -13,10 +13,10 @@ public record ServicoAtualizaçãoDto(
         @NotBlank(message = "A descrição é obrigatória!")
         String descricao,
 
-        @NotBlank(message = "O preço é obrigatório!")
+        @NotNull(message = "O preço é obrigatório!")
         BigDecimal preco,
 
-        @NotBlank(message = "O Id do Profissional é obrigatório!")
+        @NotNull(message = "O Id do Profissional é obrigatório!")
         Long profissional_id
 ) {
 }
