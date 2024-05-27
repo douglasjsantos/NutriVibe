@@ -1,8 +1,14 @@
 package br.com.fiap.nutrivibe.nutrivibe.controller;
 
+import br.com.fiap.nutrivibe.nutrivibe.dto.ProfissionalAtualizacaoDto;
+import br.com.fiap.nutrivibe.nutrivibe.dto.ProfissionalCadastroDto;
+import br.com.fiap.nutrivibe.nutrivibe.dto.ProfissionalExibitionDto;
 import br.com.fiap.nutrivibe.nutrivibe.model.Profissional;
 import br.com.fiap.nutrivibe.nutrivibe.service.ProfissionalService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,26 +23,26 @@ public class ProfissionalController {
 
     @PostMapping("/profissionais")
     @ResponseStatus(HttpStatus.CREATED)
-    public Profissional gravar(@RequestBody Profissional profissional) {
-        return service.gravar(profissional);
+    public ProfissionalExibitionDto gravar(@RequestBody @Valid ProfissionalCadastroDto profissionalCadastroDto) {
+        return service.gravar(profissionalCadastroDto);
     }
 
     @GetMapping("/profissionais/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Profissional buscarProfissionalPeloNome(@PathVariable Long id) {
+    public ProfissionalExibitionDto buscarProfissionalPeloId(@PathVariable Long id) {
         return service.buscarPorId(id);
     }
 
     @GetMapping("/profissionais")
     @ResponseStatus(HttpStatus.OK)
-    public List<Profissional> listarTodosOsProfissionais() {
-        return service.listarTodosOsProfissionais();
+    public Page<ProfissionalExibitionDto> listarTodosOsProfissionais(Pageable paginacao) {
+        return service.listarTodosOsProfissionais(paginacao);
     }
 
     @PutMapping("/profissionais")
     @ResponseStatus(HttpStatus.OK)
-    public Profissional atualizar(@RequestBody Profissional profissional) {
-        return service.Atualizar(profissional);
+    public ProfissionalExibitionDto atualizar(@RequestBody @Valid ProfissionalAtualizacaoDto profissionalAtualizacaoDto) {
+        return service.Atualizar(profissionalAtualizacaoDto);
     }
 
     @DeleteMapping("/profissionais/{id}")

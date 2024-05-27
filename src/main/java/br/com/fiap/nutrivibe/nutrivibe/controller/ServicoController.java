@@ -5,6 +5,7 @@ import br.com.fiap.nutrivibe.nutrivibe.dto.ServicoCadastroDto;
 import br.com.fiap.nutrivibe.nutrivibe.dto.ServicoExibitionDto;
 import br.com.fiap.nutrivibe.nutrivibe.model.Servico;
 import br.com.fiap.nutrivibe.nutrivibe.service.ServicoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +23,7 @@ public class ServicoController {
 
     @PostMapping("/servicos")
     @ResponseStatus(HttpStatus.CREATED)
-    public ServicoExibitionDto gravar(@RequestBody ServicoCadastroDto servicoCadastroDto) {
+    public ServicoExibitionDto gravar(@RequestBody @Valid ServicoCadastroDto servicoCadastroDto) {
         return service.gravar(servicoCadastroDto);
     }
 
@@ -40,7 +41,7 @@ public class ServicoController {
 
     @PutMapping("/servicos")
     @ResponseStatus(HttpStatus.OK)
-    public ServicoExibitionDto atualizar(@RequestBody ServicoAtualizaçãoDto servicoAtualizaçãoDto) {
+    public ServicoExibitionDto atualizar(@RequestBody @Valid ServicoAtualizaçãoDto servicoAtualizaçãoDto) {
         return service.Atualizar(servicoAtualizaçãoDto);
     }
 
