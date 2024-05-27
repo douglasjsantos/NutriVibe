@@ -1,6 +1,7 @@
 package br.com.fiap.nutrivibe.nutrivibe.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 
@@ -12,10 +13,10 @@ public record ProfissionalCadastroDto(
         @NotBlank(message = "A especialidade é obrigatório!")
         String especialidade,
 
-        @NotBlank(message = "O preço anual é obrigatório!")
+        @NotNull(message = "O preço anual é obrigatório!")
         BigDecimal precoPlanoAnual,
 
-        @NotBlank(message = "O preço mensal é obrigatório!")
+        @NotNull(message = "O preço mensal é obrigatório!")
         BigDecimal precoPlanoMensal
 ) {
 }

@@ -16,10 +16,10 @@ public record ProfissionalAtualizacaoDto(
         @NotBlank(message = "A especialidade é obrigatório!")
         String especialidade,
 
-        @NotBlank(message = "O preço anual é obrigatório!")
+        @NotNull(message = "O preço anual é obrigatório!")
         BigDecimal precoPlanoAnual,
 
-        @NotBlank(message = "O preço mensal é obrigatório!")
+        @NotNull(message = "O preço mensal é obrigatório!")
         BigDecimal precoPlanoMensal
 ) {
 }
