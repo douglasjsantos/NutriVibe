@@ -26,7 +26,7 @@ public class ServicoService {
 
     public ServicoExibitionDto gravar(ServicoCadastroDto servicoCadastroDto) {
 
-        Optional<Profissional> profissional = profissionalRepository.findById(servicoCadastroDto.getProfissional_id());
+        Optional<Profissional> profissional = profissionalRepository.findById(servicoCadastroDto.profissional_id());
 
         if (profissional.isPresent()) {
             Servico servico = new Servico();
@@ -58,10 +58,10 @@ public class ServicoService {
     }
 
     public ServicoExibitionDto Atualizar(ServicoAtualizaçãoDto servicoAtualizaçãoDto) {
-        Optional<Servico> servicoptional = servicoRepository.findById(servicoAtualizaçãoDto.getId());
+        Optional<Servico> servicoptional = servicoRepository.findById(servicoAtualizaçãoDto.id());
 
         if (servicoptional.isPresent()) {
-            Optional<Profissional> profissional = profissionalRepository.findById(servicoAtualizaçãoDto.getProfissional_id());
+            Optional<Profissional> profissional = profissionalRepository.findById(servicoAtualizaçãoDto.profissional_id());
 
             if (profissional.isPresent()) {
                 Servico servico = new Servico();

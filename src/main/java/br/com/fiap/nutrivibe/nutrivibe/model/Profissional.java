@@ -5,12 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.proxy.HibernateProxy;
 
 import java.math.BigDecimal;
 import java.util.Objects;
 
-@Entity(name = "tb_profissional")
+@Entity(name = "TB_PROFISSIONAL")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -41,18 +40,15 @@ public class Profissional {
     private BigDecimal precoPlanoMensal;
 
     @Override
-    public final boolean equals(Object object) {
+    public boolean equals(Object object) {
         if (this == object) return true;
-        if (object == null) return false;
-        Class<?> oEffectiveClass = object instanceof HibernateProxy ? ((HibernateProxy) object).getHibernateLazyInitializer().getPersistentClass() : object.getClass();
-        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
-        if (thisEffectiveClass != oEffectiveClass) return false;
+        if (object == null || getClass() != object.getClass()) return false;
         Profissional that = (Profissional) object;
-        return getId() != null && Objects.equals(getId(), that.getId());
+        return Objects.equals(id, that.id) && Objects.equals(nome, that.nome) && Objects.equals(especialidade, that.especialidade) && Objects.equals(precoPlanoAnual, that.precoPlanoAnual) && Objects.equals(precoPlanoMensal, that.precoPlanoMensal);
     }
 
     @Override
-    public final int hashCode() {
-        return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+    public int hashCode() {
+        return Objects.hash(id, nome, especialidade, precoPlanoAnual, precoPlanoMensal);
     }
 }

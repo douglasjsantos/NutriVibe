@@ -6,7 +6,7 @@ import lombok.Getter;
 
 import java.math.BigDecimal;
 
-@Getter
+
 public record ServicoAtualizaçãoDto(
         @NotNull(message = "O ID é obrigatório!")
         Long id,

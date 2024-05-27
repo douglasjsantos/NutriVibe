@@ -36,24 +36,21 @@ public class Agendamento {
     private LocalDateTime dataHora;
 
     @ManyToOne
-    private Agendamento usuario;
+    private Usuario usuario;
 
     @ManyToOne
     private Servico servico;
 
     @Override
-    public final boolean equals(Object object) {
+    public boolean equals(Object object) {
         if (this == object) return true;
-        if (object == null) return false;
-        Class<?> oEffectiveClass = object instanceof HibernateProxy ? ((HibernateProxy) object).getHibernateLazyInitializer().getPersistentClass() : object.getClass();
-        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
-        if (thisEffectiveClass != oEffectiveClass) return false;
+        if (object == null || getClass() != object.getClass()) return false;
         Agendamento that = (Agendamento) object;
-        return getId() != null && Objects.equals(getId(), that.getId());
+        return Objects.equals(id, that.id) && Objects.equals(dataHora, that.dataHora) && Objects.equals(usuario, that.usuario) && Objects.equals(servico, that.servico);
     }
 
     @Override
-    public final int hashCode() {
-        return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+    public int hashCode() {
+        return Objects.hash(id, dataHora, usuario, servico);
     }
 }

@@ -5,6 +5,7 @@ import br.com.fiap.nutrivibe.nutrivibe.dto.UsuarioCadastroDto;
 import br.com.fiap.nutrivibe.nutrivibe.dto.UsuarioExibitionDto;
 import br.com.fiap.nutrivibe.nutrivibe.model.Usuario;
 import br.com.fiap.nutrivibe.nutrivibe.service.UsuarioService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +23,7 @@ public class UsuarioController {
 
     @PostMapping("/usuarios")
     @ResponseStatus(HttpStatus.CREATED)
-    public UsuarioExibitionDto gravar(@RequestBody UsuarioCadastroDto usuarioCadastroDto) {
+    public UsuarioExibitionDto gravar(@RequestBody @Valid UsuarioCadastroDto usuarioCadastroDto) {
         return service.gravar(usuarioCadastroDto);
     }
 
@@ -52,7 +53,7 @@ public class UsuarioController {
 
     @PutMapping("/usuarios")
     @ResponseStatus(HttpStatus.OK)
-    public UsuarioExibitionDto atualizar(@RequestBody Usuario usuario) {
+    public UsuarioExibitionDto atualizar(@RequestBody @Valid Usuario usuario) {
         return service.Atualizar(usuario);
     }
 

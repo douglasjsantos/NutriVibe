@@ -1,8 +1,14 @@
 package br.com.fiap.nutrivibe.nutrivibe.controller;
 
+import br.com.fiap.nutrivibe.nutrivibe.dto.AgendamentoAtualizacaoDto;
+import br.com.fiap.nutrivibe.nutrivibe.dto.AgendamentoCadastroDto;
+import br.com.fiap.nutrivibe.nutrivibe.dto.AgendamentoExibitionDto;
 import br.com.fiap.nutrivibe.nutrivibe.model.Agendamento;
 import br.com.fiap.nutrivibe.nutrivibe.service.AgendamentoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,26 +23,26 @@ public class AgendamentoController {
 
     @PostMapping("/agendamentos")
     @ResponseStatus(HttpStatus.CREATED)
-    public Agendamento gravar(@RequestBody Agendamento agendamento) {
-        return service.gravar(agendamento);
+    public AgendamentoExibitionDto gravar(@RequestBody @Valid AgendamentoCadastroDto agendamentoCadastroDto) {
+        return service.gravar(agendamentoCadastroDto);
     }
 
     @GetMapping("/agendamentos/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Agendamento buscarAgendamentoPeloId(@PathVariable Long id) {
+    public AgendamentoExibitionDto buscarAgendamentoPeloId(@PathVariable Long id) {
         return service.buscarPeloId(id);
     }
 
     @GetMapping("/agendamentos")
     @ResponseStatus(HttpStatus.OK)
-    public List<Agendamento> listarTodosOsAgendamentos() {
-        return service.listarTodosOsAgendamentos();
+    public Page<AgendamentoExibitionDto> listarTodosOsAgendamentos(Pageable pageable) {
+        return service.listarTodosOsAgendamentos(pageable);
     }
 
     @PutMapping("/agendamentos")
     @ResponseStatus(HttpStatus.OK)
-    public Agendamento atualizar(@RequestBody Agendamento agendamento) {
-        return service.Atualizar(agendamento);
+    public AgendamentoExibitionDto atualizar(@RequestBody @Valid AgendamentoAtualizacaoDto agendamentoAtualizacaoDto) {
+        return service.Atualizar(agendamentoAtualizacaoDto);
     }
 
     @DeleteMapping("/agendamentos/{id}")
