@@ -1,6 +1,7 @@
 package br.com.fiap.nutrivibe.nutrivibe.dto;
 
 import br.com.fiap.nutrivibe.nutrivibe.model.Usuario;
+import br.com.fiap.nutrivibe.nutrivibe.model.UsuarioRole;
 
 import java.time.LocalDate;
 
@@ -9,7 +10,8 @@ public record UsuarioExibitionDto(
         String nome,
         String email,
         String cpf,
-        LocalDate dataNascimento
+        LocalDate dataNascimento,
+        UsuarioRole role
 
 ) {
     public UsuarioExibitionDto(Usuario usuario){
@@ -18,7 +20,8 @@ public record UsuarioExibitionDto(
             usuario.getNome(),
             usuario.getEmail(),
             usuario.getCpf(),
-            usuario.getDataNascimento()
+            usuario.getDataNascimento(),
+            usuario.getRole()
         );
     }
 }

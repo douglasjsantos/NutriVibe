@@ -46,14 +46,14 @@ CREATE TABLE TB_PROFISSIONAL (
     id INTEGER DEFAULT TB_PROFISSIONAL_SEQ.NEXTVAL NOT NULL PRIMARY KEY,
     nome VARCHAR2(100) NOT NULL,
     especialidade VARCHAR2(100),
-    preco_plano_anual NUMBER(10,2),
-    preco_plano_mensal NUMBER(10,2)
+    preco_plano_anual NUMBER,
+    preco_plano_mensal NUMBER
 );
 
 CREATE TABLE TB_SERVICO (
     id INTEGER DEFAULT TB_SERVICO_SEQ.NEXTVAL NOT NULL PRIMARY KEY,
     descricao VARCHAR2(200),
-    preco NUMBER(10,2),
+    preco NUMBER,
     profissional_id INTEGER,
     CONSTRAINT fk_servico_profissional FOREIGN KEY (profissional_id) REFERENCES TB_PROFISSIONAL(ID)
 );

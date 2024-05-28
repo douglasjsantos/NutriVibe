@@ -1,5 +1,6 @@
 package br.com.fiap.nutrivibe.nutrivibe.dto;
 
+import br.com.fiap.nutrivibe.nutrivibe.model.UsuarioRole;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -25,7 +26,10 @@ public record UsuarioCadastroDto (
     String cpf,
 
     @NotNull(message = "A data de nascimento é obrigatória!")
-    LocalDate dataNascimento
+    LocalDate dataNascimento,
+
+    @NotNull(message = "Regra de anesso necessária campo! exemplo 'role':'admin'")
+    UsuarioRole role
 
 
 ){}

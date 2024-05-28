@@ -1,6 +1,7 @@
 package br.com.fiap.nutrivibe.nutrivibe.controller;
 
 
+import br.com.fiap.nutrivibe.nutrivibe.dto.UsuarioAtualizacaoDto;
 import br.com.fiap.nutrivibe.nutrivibe.dto.UsuarioCadastroDto;
 import br.com.fiap.nutrivibe.nutrivibe.dto.UsuarioExibitionDto;
 import br.com.fiap.nutrivibe.nutrivibe.model.Usuario;
@@ -53,8 +54,8 @@ public class UsuarioController {
 
     @PutMapping("/usuarios")
     @ResponseStatus(HttpStatus.OK)
-    public UsuarioExibitionDto atualizar(@RequestBody @Valid Usuario usuario) {
-        return service.Atualizar(usuario);
+    public UsuarioExibitionDto atualizar(@RequestBody @Valid UsuarioAtualizacaoDto usuarioAtualizacaoDto) {
+        return service.Atualizar(usuarioAtualizacaoDto);
     }
 
     @DeleteMapping("/usuarios/{id}")
