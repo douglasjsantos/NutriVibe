@@ -40,7 +40,7 @@ public class AuthController {
                         usuarioLoginDto.email(),
                         usuarioLoginDto.senha()
                 );
-        
+
         Authentication auth = authenticationManager.authenticate(usernamePassword);
 
         String token = tokenService.gerarToken((Usuario) auth.getPrincipal());
