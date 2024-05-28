@@ -4,6 +4,7 @@ package br.com.fiap.nutrivibe.nutrivibe.service;
 import br.com.fiap.nutrivibe.nutrivibe.dto.UsuarioAtualizacaoDto;
 import br.com.fiap.nutrivibe.nutrivibe.dto.UsuarioCadastroDto;
 import br.com.fiap.nutrivibe.nutrivibe.dto.UsuarioExibitionDto;
+import br.com.fiap.nutrivibe.nutrivibe.execption.ObjetoNaoEncontradoException;
 import br.com.fiap.nutrivibe.nutrivibe.model.Usuario;
 import br.com.fiap.nutrivibe.nutrivibe.repository.UsuarioRepository;
 import org.springframework.beans.BeanUtils;
@@ -37,7 +38,7 @@ public class UsuarioService {
         if (usuarioOptional.isPresent()) {
             return new UsuarioExibitionDto(usuarioOptional.get());
         } else {
-            throw new RuntimeException("Usuário não encontrado");
+            throw new ObjetoNaoEncontradoException("Usuário não encontrado");
         }
     }
 
@@ -54,7 +55,7 @@ public class UsuarioService {
         if (usuarioOptional.isPresent()) {
             return new UsuarioExibitionDto(usuarioOptional.get());
         } else {
-            throw new RuntimeException("Usuário não encontrado");
+            throw new ObjetoNaoEncontradoException("Usuário não encontrado");
         }
     }
 
@@ -78,7 +79,7 @@ public class UsuarioService {
 
             return new UsuarioExibitionDto(usuarioRepository.save(usuario));
         } else {
-            throw new RuntimeException("Usuario não encontrado");
+            throw new ObjetoNaoEncontradoException("Usuario não encontrado");
         }
     }
 
@@ -88,7 +89,7 @@ public class UsuarioService {
         if (usuarioOptional.isPresent()) {
             usuarioRepository.delete(usuarioOptional.get());
         } else {
-            throw new RuntimeException("Usuário não localizado");
+            throw new ObjetoNaoEncontradoException("Usuário não localizado");
         }
     }
 

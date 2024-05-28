@@ -4,6 +4,7 @@ import br.com.fiap.nutrivibe.nutrivibe.dto.ProfissionalAtualizacaoDto;
 import br.com.fiap.nutrivibe.nutrivibe.dto.ProfissionalCadastroDto;
 import br.com.fiap.nutrivibe.nutrivibe.dto.ProfissionalExibitionDto;
 import br.com.fiap.nutrivibe.nutrivibe.dto.UsuarioExibitionDto;
+import br.com.fiap.nutrivibe.nutrivibe.execption.ObjetoNaoEncontradoException;
 import br.com.fiap.nutrivibe.nutrivibe.model.Profissional;
 import br.com.fiap.nutrivibe.nutrivibe.model.Usuario;
 import br.com.fiap.nutrivibe.nutrivibe.repository.ProfissionalRepository;
@@ -36,7 +37,7 @@ public class ProfissionalService {
         if (profissionalOptional.isPresent()) {
             return new ProfissionalExibitionDto(profissionalOptional.get());
         } else {
-            throw new RuntimeException("Profissional não encontrado");
+            throw new ObjetoNaoEncontradoException("Profissional não encontrado");
         }
     }
 
@@ -54,7 +55,7 @@ public class ProfissionalService {
         if (profissionalOptional.isPresent()) {
             return new ProfissionalExibitionDto(profissionalRepository.save(profissionalOptional.get()));
         } else {
-            throw new RuntimeException("Profissional não encontrado");
+            throw new ObjetoNaoEncontradoException("Profissional não encontrado");
         }
     }
 
@@ -64,7 +65,7 @@ public class ProfissionalService {
         if (profissionalOptional.isPresent()) {
             profissionalRepository.delete(profissionalOptional.get());
         } else {
-            throw new RuntimeException("Profissional não localizado");
+            throw new ObjetoNaoEncontradoException("Profissional não localizado");
         }
     }
 

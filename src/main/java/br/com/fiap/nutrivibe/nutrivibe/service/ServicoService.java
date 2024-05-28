@@ -3,6 +3,7 @@ package br.com.fiap.nutrivibe.nutrivibe.service;
 import br.com.fiap.nutrivibe.nutrivibe.dto.ServicoAtualizaçãoDto;
 import br.com.fiap.nutrivibe.nutrivibe.dto.ServicoCadastroDto;
 import br.com.fiap.nutrivibe.nutrivibe.dto.ServicoExibitionDto;
+import br.com.fiap.nutrivibe.nutrivibe.execption.ObjetoNaoEncontradoException;
 import br.com.fiap.nutrivibe.nutrivibe.model.Profissional;
 import br.com.fiap.nutrivibe.nutrivibe.model.Servico;
 import br.com.fiap.nutrivibe.nutrivibe.repository.ProfissionalRepository;
@@ -34,7 +35,7 @@ public class ServicoService {
             servico.setProfissional(profissional.get());
             return new ServicoExibitionDto(servicoRepository.save(servico));
         } else {
-            throw new RuntimeException("Profissional não encontrado");
+            throw new ObjetoNaoEncontradoException("Profissional não encontrado");
         }
 
 
@@ -46,7 +47,7 @@ public class ServicoService {
         if (servicoOptional.isPresent()) {
             return new ServicoExibitionDto(servicoOptional.get());
         } else {
-            throw new RuntimeException("Serviço não encontrado");
+            throw new ObjetoNaoEncontradoException("Serviço não encontrado");
         }
     }
 
@@ -69,10 +70,10 @@ public class ServicoService {
                 servico.setProfissional(profissional.get());
                 return new ServicoExibitionDto(servicoRepository.save(servico));
             } else {
-                throw new RuntimeException("Profissional não encontrado");
+                throw new ObjetoNaoEncontradoException("Profissional não encontrado");
             }
         } else {
-            throw new RuntimeException("Serviço não encontrado");
+            throw new ObjetoNaoEncontradoException("Serviço não encontrado");
         }
     }
 
@@ -82,7 +83,7 @@ public class ServicoService {
         if (servicoOptional.isPresent()) {
             servicoRepository.delete(servicoOptional.get());
         } else {
-            throw new RuntimeException("Serviço não localizado");
+            throw new ObjetoNaoEncontradoException("Serviço não localizado");
         }
     }
 
