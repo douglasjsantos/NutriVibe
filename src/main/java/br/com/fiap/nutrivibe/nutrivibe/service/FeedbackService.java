@@ -4,6 +4,7 @@ package br.com.fiap.nutrivibe.nutrivibe.service;
 import br.com.fiap.nutrivibe.nutrivibe.dto.FeedbackAtualizacaoDto;
 import br.com.fiap.nutrivibe.nutrivibe.dto.FeedbackCadastroDto;
 import br.com.fiap.nutrivibe.nutrivibe.dto.FeedbackExibitionDto;
+import br.com.fiap.nutrivibe.nutrivibe.execption.ObjetoNaoEncontradoException;
 import br.com.fiap.nutrivibe.nutrivibe.model.Agendamento;
 import br.com.fiap.nutrivibe.nutrivibe.model.Feedback;
 import br.com.fiap.nutrivibe.nutrivibe.repository.AgendamentoRepository;
@@ -36,7 +37,7 @@ public class FeedbackService {
 
             return new FeedbackExibitionDto(feedbackRepository.save(feedback));
         } else {
-            throw new RuntimeException("Agendamento não encontrado");
+            throw new ObjetoNaoEncontradoException("Agendamento não encontrado");
         }
 
     }
@@ -47,7 +48,7 @@ public class FeedbackService {
         if (feedbackOptional.isPresent()) {
             return new FeedbackExibitionDto(feedbackOptional.get());
         } else {
-            throw new RuntimeException("Feedback não encontrado");
+            throw new ObjetoNaoEncontradoException("Feedback não encontrado");
         }
     }
 
@@ -70,10 +71,10 @@ public class FeedbackService {
                 feedback.setAgendamento(agendamento.get());
                 return new FeedbackExibitionDto(feedbackRepository.save(feedback));
             } else {
-                throw new RuntimeException("Agendamento não encontrado");
+                throw new ObjetoNaoEncontradoException("Agendamento não encontrado");
             }
         } else {
-            throw new RuntimeException("Feedback não encontrado");
+            throw new ObjetoNaoEncontradoException("Feedback não encontrado");
         }
     }
 
@@ -83,7 +84,7 @@ public class FeedbackService {
         if (feedbackOptional.isPresent()) {
             feedbackRepository.delete(feedbackOptional.get());
         } else {
-            throw new RuntimeException("Feedback não localizado");
+            throw new ObjetoNaoEncontradoException("Feedback não localizado");
         }
     }
 

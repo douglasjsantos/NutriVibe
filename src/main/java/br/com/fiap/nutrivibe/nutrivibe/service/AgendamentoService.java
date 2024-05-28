@@ -4,6 +4,7 @@ package br.com.fiap.nutrivibe.nutrivibe.service;
 import br.com.fiap.nutrivibe.nutrivibe.dto.AgendamentoAtualizacaoDto;
 import br.com.fiap.nutrivibe.nutrivibe.dto.AgendamentoCadastroDto;
 import br.com.fiap.nutrivibe.nutrivibe.dto.AgendamentoExibitionDto;
+import br.com.fiap.nutrivibe.nutrivibe.execption.ObjetoNaoEncontradoException;
 import br.com.fiap.nutrivibe.nutrivibe.model.Agendamento;
 import br.com.fiap.nutrivibe.nutrivibe.model.Profissional;
 import br.com.fiap.nutrivibe.nutrivibe.model.Servico;
@@ -51,7 +52,7 @@ public class AgendamentoService {
             if (!servico.isPresent()) {
                 mensagem.append("Serviço não encontrado");
             }
-            throw new RuntimeException(String.valueOf(mensagem));
+            throw new ObjetoNaoEncontradoException(String.valueOf(mensagem));
         }
 
 
@@ -63,7 +64,7 @@ public class AgendamentoService {
         if (agendamentoOptional.isPresent()) {
             return new AgendamentoExibitionDto(agendamentoOptional.get());
         } else {
-            throw new RuntimeException("Agendamento não encontrado");
+            throw new ObjetoNaoEncontradoException("Agendamento não encontrado");
         }
     }
 
@@ -96,10 +97,10 @@ public class AgendamentoService {
                 if (!servico.isPresent()) {
                     mensagem.append("Serviço não encontrado");
                 }
-                throw new RuntimeException(String.valueOf(mensagem));
+                throw new ObjetoNaoEncontradoException(String.valueOf(mensagem));
             }
         } else {
-            throw new RuntimeException("Agendamento não encontrado");
+            throw new ObjetoNaoEncontradoException("Agendamento não encontrado");
         }
     }
 
@@ -109,7 +110,7 @@ public class AgendamentoService {
         if (agendamentoOptional.isPresent()) {
             agendamentoRepository.delete(agendamentoOptional.get());
         } else {
-            throw new RuntimeException("Agendamento não localizado");
+            throw new ObjetoNaoEncontradoException("Agendamento não localizado");
         }
     }
 

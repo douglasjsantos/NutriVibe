@@ -16,6 +16,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Scanner;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -30,14 +32,19 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid UsuarioLoginDto usuarioLoginDto){
+
+
         UsernamePasswordAuthenticationToken usernamePassword=
                 new UsernamePasswordAuthenticationToken(
+
                         usuarioLoginDto.email(),
                         usuarioLoginDto.senha()
                 );
+        
         Authentication auth = authenticationManager.authenticate(usernamePassword);
 
         String token = tokenService.gerarToken((Usuario) auth.getPrincipal());
+
 
         return ResponseEntity.ok(new TokenDto(token));
     }
