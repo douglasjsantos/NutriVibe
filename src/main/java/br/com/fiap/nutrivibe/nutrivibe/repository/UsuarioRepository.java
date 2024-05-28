@@ -4,17 +4,18 @@ import br.com.fiap.nutrivibe.nutrivibe.model.Usuario;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
-    public Optional<Usuario> findByNome(String nome);
+    Optional<Usuario> findByNome(String nome);
+    UserDetails findByEmail(String email);
 
-    public Page<Usuario> findByDataNascimentoBetween(LocalDate dataInicial, LocalDate dataFinal, Pageable paginacao);
+    Page<Usuario> findByDataNascimentoBetween(LocalDate dataInicial, LocalDate dataFinal, Pageable paginacao);
 
 }

@@ -1,6 +1,7 @@
 package br.com.fiap.nutrivibe.nutrivibe.service;
 
 
+import br.com.fiap.nutrivibe.nutrivibe.dto.UsuarioAtualizacaoDto;
 import br.com.fiap.nutrivibe.nutrivibe.dto.UsuarioCadastroDto;
 import br.com.fiap.nutrivibe.nutrivibe.dto.UsuarioExibitionDto;
 import br.com.fiap.nutrivibe.nutrivibe.model.Usuario;
@@ -9,6 +10,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -22,8 +24,11 @@ public class UsuarioService {
     private UsuarioRepository usuarioRepository;
 
     public UsuarioExibitionDto gravar(UsuarioCadastroDto usuarioCadastroDto) {
+        String senhaCriptografada = new BCryptPasswordEncoder().encode(usuarioCadastroDto.senha());
+
         Usuario usuario = new Usuario();
         BeanUtils.copyProperties(usuarioCadastroDto, usuario);
+        usuario.setSenha(senhaCriptografada);
         return new UsuarioExibitionDto(usuarioRepository.save(usuario));
     }
 
@@ -53,6 +58,7 @@ public class UsuarioService {
         }
     }
 
+
     public Page<UsuarioExibitionDto> mostrarAniversariantes(LocalDate dataInicial, LocalDate dataFinal,Pageable paginacao) {
         Page<UsuarioExibitionDto> usuarios = usuarioRepository
                 .findByDataNascimentoBetween(dataInicial, dataFinal,paginacao)
@@ -60,11 +66,17 @@ public class UsuarioService {
         return usuarios;
     }
 
-    public UsuarioExibitionDto Atualizar(Usuario usuario) {
-        Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuario.getId());
+    public UsuarioExibitionDto Atualizar(UsuarioAtualizacaoDto usuarioAtualizacaoDto) {
+        Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioAtualizacaoDto.id());
 
         if (usuarioOptional.isPresent()) {
-            return new UsuarioExibitionDto(usuarioRepository.save(usuarioOptional.get()));
+            String senhaCriptografada = new BCryptPasswordEncoder().encode(usuarioAtualizacaoDto.senha());
+
+            Usuario usuario = usuarioOptional.get();
+
+            usuario.setSenha(senhaCriptografada);
+
+            return new UsuarioExibitionDto(usuarioRepository.save(usuario));
         } else {
             throw new RuntimeException("Usuario não encontrado");
         }
